@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import viewsets, filters, status
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
@@ -32,7 +33,8 @@ class ConflictRecordViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = StandardResultsSetPagination
     
     # Enables filtering via URL: /api/v1/analytics/records/?search=AFG
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['year', 'iso_ref', 'continent']
     search_fields = ['iso_ref', 'country_name', 'continent', 'year']
 
     @action(detail=False, methods=['get'])
