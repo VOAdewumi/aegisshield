@@ -545,7 +545,7 @@ const Dashboard = () => {
       setLoading(true);
       try {
         // 1. Determine base endpoint
-        let url = "http://127.0.0.1:8000/api/v1/analytics/records/";
+        let url = "https://aegisshield-voadewumi2316.vercel.app/api/v1/analytics/records/";
 
         // 2. Build Query Parameters
         // We ONLY use /latest/ if the user hasn't selected a specific year/search
