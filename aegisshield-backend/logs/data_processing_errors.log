@@ -1,0 +1,99 @@
+2026-01-07 10:34:36 - LINE DATABASE FAILURE at line 160001: connection to server at "localhost" (::1), port 5432 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-01-07 10:34:36 - LINE DATABASE FAILURE at line 165001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:36 - LINE DATABASE FAILURE at line 170001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:36 - LINE DATABASE FAILURE at line 175001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:36 - LINE DATABASE FAILURE at line 180001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:36 - LINE DATABASE FAILURE at line 185001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:36 - LINE DATABASE FAILURE at line 190001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:37 - LINE DATABASE FAILURE at line 195001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:37 - LINE DATABASE FAILURE at line 200001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:37 - LINE DATABASE FAILURE at line 205001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:37 - LINE DATABASE FAILURE at line 210001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:37 - LINE DATABASE FAILURE at line 215001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:37 - LINE DATABASE FAILURE at line 220001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:38 - LINE DATABASE FAILURE at line 225001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+
+2026-01-07 10:34:38 - LINE DATABASE FAILURE at line 230001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is not yet accepting connections
+DETAIL:  Consistent recovery state has not been yet reached.
+
+2026-01-07 10:34:38 - LINE DATABASE FAILURE at line 235001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is not yet accepting connections
+DETAIL:  Consistent recovery state has not been yet reached.
+
+2026-01-07 10:34:38 - LINE DATABASE FAILURE at line 240001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is not yet accepting connections
+DETAIL:  Consistent recovery state has not been yet reached.
+
+2026-01-07 10:34:38 - LINE DATABASE FAILURE at line 245001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is not yet accepting connections
+DETAIL:  Consistent recovery state has not been yet reached.
+
+2026-01-07 10:34:38 - LINE DATABASE FAILURE at line 250001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is not yet accepting connections
+DETAIL:  Consistent recovery state has not been yet reached.
+
+2026-01-07 10:34:38 - LINE DATABASE FAILURE at line 255001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is not yet accepting connections
+DETAIL:  Consistent recovery state has not been yet reached.
+
+2026-01-07 10:34:38 - LINE DATABASE FAILURE at line 260001: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is not yet accepting connections
+DETAIL:  Consistent recovery state has not been yet reached.
+
+2026-01-07 10:34:43 - LINE DATABASE FAILURE at line 265001: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-07 10:34:47 - LINE DATABASE FAILURE at line 270001: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-07 10:34:51 - LINE DATABASE FAILURE at line 275001: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-07 10:34:55 - LINE DATABASE FAILURE at line 280001: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-07 10:34:59 - LINE DATABASE FAILURE at line 285001: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-07 10:35:03 - LINE DATABASE FAILURE at line 290001: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-07 10:35:08 - LINE DATABASE FAILURE at line 295001: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-07 10:37:35 - LINE DATABASE FAILURE at line 5001: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-07 10:37:39 - LINE DATABASE FAILURE at line 10001: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-07 11:08:48 - LINE DATABASE FAILURE at line 5001: could not extend file "base/32769/40964": No space left on device
+HINT:  Check free disk space.
+

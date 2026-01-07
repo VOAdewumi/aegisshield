@@ -12,15 +12,17 @@ class ConflictRecord(models.Model):
     fatalities = models.IntegerField()
     threat_type = models.CharField(max_length=50)
     intel_confidence = models.FloatField()
+    hotspot_score = models.FloatField(null=True, blank=True)
     
     # Calculated Index (Stored for performance)
     intensity_index = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.country_name} ({self.year}) - {self.threat_type}"
+        return f"{self.iso_ref} | {self.timestamp} | Hotspot: {self.hotspot_score}"
 
     class Meta:
         indexes = [
-            models.Index(fields=['year', 'iso_ref']),
+            models.Index(fields=['timestamp', 'iso_ref']), # Optimized for time-series lookups
             models.Index(fields=['continent']),
+            models.Index(fields=['year', 'iso_ref']),
         ]
