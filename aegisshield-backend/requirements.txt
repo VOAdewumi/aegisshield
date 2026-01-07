@@ -1,7 +1,0 @@
-Django>=5.0.0
-djangorestframework
-django-cors-headers
-pandas
-openpyxl
-statsmodels
-numpy

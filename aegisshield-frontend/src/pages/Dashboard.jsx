@@ -10,22 +10,44 @@ const Dashboard = () => {
     country: 'ALL_COUNTRIES'
   });
 
-  // 2. Data State (To be populated by Backend)
+  // 2. Data State
   const [conflictData, setConflictData] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // 3. Backend Trigger
+  // 3. Backend Integration
   useEffect(() => {
     const fetchHotspotData = async () => {
       setLoading(true);
       try {
-        console.log(`FETCHING_DATA for: ${filters.year}, ${filters.continent}, ${filters.country}`);
-        // Example: const response = await fetch(`/api/conflicts?year=${filters.year}&country=${filters.country}`);
-        // const data = await response.json();
-        // setConflictData(data);
+        // Constructing the URL dynamically based on filters
+        // If 'GLOBAL' or 'ALL_COUNTRIES' is selected, we use the 'latest' snapshot endpoint
+        let url = 'http://127.0.0.1:8000/api/v1/analytics/records/latest/';
         
-        // Mocking a delay
-        setTimeout(() => setLoading(false), 500);
+        // If a specific year or country is selected, we use the filtering endpoint
+        if (filters.year !== '2026' || filters.country !== 'ALL_COUNTRIES') {
+            url = `http://127.0.0.1:8000/api/v1/analytics/records/?year=${filters.year}`;
+            if (filters.country !== 'ALL_COUNTRIES') {
+                url += `&search=${filters.country}`;
+            }
+        }
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("NETWORK_RESPONSE_NOT_OK");
+        
+        const result = await response.json();
+        
+        // Handle DRF Pagination (if result comes as an object with a 'results' array)
+        const dataArray = result.results ? result.results : result;
+
+        // 4. Transform Array to Mapping Object for the Map Component
+        // Goal: { "AFG": 75.2, "NGA": 88.1, ... }
+        const mappedData = {};
+        dataArray.forEach(record => {
+          mappedData[record.iso_ref] = record.hotspot_score;
+        });
+
+        setConflictData(mappedData);
+        setLoading(false);
       } catch (error) {
         console.error("INTEL_FETCH_FAILURE", error);
         setLoading(false);
@@ -33,14 +55,13 @@ const Dashboard = () => {
     };
 
     fetchHotspotData();
-  }, [filters]); // Re-runs whenever any filter changes
+  }, [filters]); // Re-runs whenever dropdowns change
 
   const updateFilter = (key, val) => {
     setFilters(prev => ({ ...prev, [key]: val }));
   };
 
-  // Mock Country List (Replace with dynamic list if needed)
-  const countries = ['ALL_COUNTRIES', 'United States', 'Ukraine', 'China', 'Russia', 'Israel', 'Taiwan', 'Sudan', 'Myanmar'];
+  const countries = ['ALL_COUNTRIES', 'AFG', 'NGA', 'USA', 'UKR', 'RUS', 'ISR', 'CHN'];
   const continents = ['GLOBAL', 'North America', 'South America', 'Europe', 'Africa', 'Asia', 'Oceania'];
 
   return (
@@ -92,7 +113,11 @@ const Dashboard = () => {
                </li>
                <li style={{ padding: '1rem 0', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between' }}>
                  <span>DATABASE_SYNC:</span> 
-                 <span style={{ color: 'var(--success)' }}>STABLE</span>
+                 <span style={{ color: 'var(--success)' }}>CONNECTED</span>
+               </li>
+               <li style={{ padding: '1rem 0', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between' }}>
+                 <span>RECORDS_LOADED:</span> 
+                 <span style={{ color: 'var(--text-main)' }}>{Object.keys(conflictData).length} Units</span>
                </li>
             </ul>
           </div>

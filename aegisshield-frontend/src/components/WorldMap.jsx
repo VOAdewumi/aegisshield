@@ -21,63 +21,71 @@ const WorldMap = ({ conflictData = {} }) => {
   };
 
   const drawMap = (ctx, width, height, highlightId = null) => {
-    // 1. PULL CSS VARIABLES INTO CANVAS CONTEXT
     const style = getComputedStyle(document.documentElement);
     const theme = document.documentElement.getAttribute('data-theme') || 'dark';
     
+    // Updated color variables based on your CSS and requested logic
     const colors = {
-      accent: style.getPropertyValue('--accent').trim(),
-      secondary: style.getPropertyValue('--secondary').trim(),
+      accent: style.getPropertyValue('--accent').trim(), // Critical Red
+      secondary: style.getPropertyValue('--secondary').trim(), // Tactical Cyan
+      whiteColor: style.getPropertyValue('--text-main').trim(), // For hover border
+      staticWhite: '#FFFFFF',
+      warning: style.getPropertyValue('--warning').trim(), // Alert Yellow
+      okayColor: style.getPropertyValue('--success').trim(), // Stable Green
       mapBase: style.getPropertyValue('--map-base').trim(),
       borderSelected: style.getPropertyValue('--border-selected').trim(),
       gridLine: style.getPropertyValue('--grid-line').trim(),
-      // Logic: Faded white for dark theme (0.08 alpha), Solid white for light theme
       defaultBorder: theme === 'light' ? '#ffffff' : 'rgba(255, 255, 255, 0.08)'
     };
 
     ctx.clearRect(0, 0, width, height);
 
-    // 2. DRAW TACTICAL GRID
+    // DRAW TACTICAL GRID
     ctx.strokeStyle = colors.gridLine;
     ctx.lineWidth = 0.5;
     const step = 45;
     for (let i = 0; i < width; i += step) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, height); ctx.stroke(); }
     for (let i = 0; i < height; i += step) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(width, i); ctx.stroke(); }
 
-    const project = (lon, lat) => {
-      const x = (lon + 180) * (width / 360);
-      const y = (90 - lat) * (height / 180);
-      return [x, y];
-    };
-
     geoData.features.forEach(feature => {
-      const iso = feature.properties.iso_a3 || feature.properties.ISO_A3;
+      const iso = feature.properties.iso_a3 || feature.properties.ISO_A3 || feature.properties.iso_3;
       const intensity = conflictData[iso] || 0;
       const isHighlighted = iso === highlightId;
 
-      // Reset shadows for every path to avoid bleed
-      ctx.shadowBlur = 0;
-
-      if (isHighlighted) {
-        ctx.shadowBlur = 1;
-        ctx.shadowColor = colors.secondary;
-      } else {
-        ctx.fillStyle = intensity > 0 
-          ? `rgba(255, 62, 62, ${Math.max(0.3, intensity / 100)})` // Critical Red scaled
-          : colors.mapBase;
+      // 1. DYNAMIC COLOR THRESHOLD LOGIC
+      // Critical: 70% and above
+      if (intensity >= 70) {
+        ctx.fillStyle = colors.accent; 
+      } 
+      // Mild/Active: 40% to 89%
+      else if (intensity >= 40) {
+        ctx.fillStyle = colors.warning; // Semi-transparent Tactical Cyan
+      } 
+      // Low/Stable or No Cases: Remaining mildest color
+      else {
+        ctx.fillStyle = colors.okayColor;
       }
 
-      ctx.strokeStyle = isHighlighted ? colors.borderSelected : colors.defaultBorder;
-      ctx.lineWidth = isHighlighted ? 0.2 : 0.8;
+      // 2. BORDER & GLOW LOGIC (Updated to use whiteColor)
+      ctx.shadowBlur = 0; 
+      if (isHighlighted) {
+        ctx.strokeStyle = colors.staticWhite; 
+        ctx.lineWidth = 1.0;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = colors.staticWhite; // Tactical white glow on hover
+      } else {
+        ctx.strokeStyle = colors.staticWhite;
+        ctx.lineWidth = 0.5;
+      }
 
-      // Destructuring geometry to avoid ReferenceError
       const { type, coordinates } = feature.geometry;
 
       const drawRing = (ring) => {
         ctx.beginPath();
         ring.forEach((c, i) => {
-          const [px, py] = project(c[0], c[1]);
-          i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+          const x = (c[0] + 180) * (width / 360);
+          const y = (90 - c[1]) * (height / 180);
+          i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         });
         ctx.fill();
         ctx.stroke();
@@ -100,18 +108,13 @@ const WorldMap = ({ conflictData = {} }) => {
     const y = e.clientY - rect.top;
     setMouseCoord({ x, y });
 
-    // Boundary check for tooltip positioning
     if (tooltipRef.current) {
       const tooltipRect = tooltipRef.current.getBoundingClientRect();
       let offsetX = 15;
       let offsetY = 15;
 
-      if (x + tooltipRect.width + 20 > rect.width) {
-        offsetX = -(tooltipRect.width + 15);
-      }
-      if (y + tooltipRect.height + 20 > rect.height) {
-        offsetY = -(tooltipRect.height + 15);
-      }
+      if (x + tooltipRect.width + 20 > rect.width) offsetX = -(tooltipRect.width + 15);
+      if (y + tooltipRect.height + 20 > rect.height) offsetY = -(tooltipRect.height + 15);
       setTooltipOffset({ x: offsetX, y: offsetY });
     }
 
@@ -126,14 +129,13 @@ const WorldMap = ({ conflictData = {} }) => {
       if (match) { found = f.properties; break; }
     }
 
-    // DYNAMIC CURSOR LOGIC
-    // If a country is found, change cursor to pointer, else back to crosshair/default
     if (found) {
         canvas.style.cursor = 'pointer';
+        const iso = found.iso_a3 || found.ISO_A3 || found.iso_3;
         setHoveredCountry({ 
-            name: found.name || found.NAME, 
-            iso: found.iso_a3 || found.ISO_A3,
-            intensity: conflictData[found.iso_a3 || found.ISO_A3] || 0 
+            name: found.name || found.NAME || "UNKNOWN_SECTOR", 
+            iso: iso,
+            intensity: (conflictData[iso] || 0).toFixed(2) 
         });
     } else {
         canvas.style.cursor = 'crosshair';
@@ -173,7 +175,7 @@ const WorldMap = ({ conflictData = {} }) => {
         >
           <div className="tooltip-header">{hoveredCountry.name.toUpperCase()}</div>
           <div>ISO_REF: {hoveredCountry.iso}</div>
-          <div>INTENSITY_LVL: {hoveredCountry.intensity}%</div>
+          <div>HOTSPOT_INDEX: <span style={{color: hoveredCountry.intensity >= 90 ? 'var(--accent)' : 'var(--secondary)'}}>{hoveredCountry.intensity}%</span></div>
         </div>
       )}
     </div>
