@@ -201,3 +201,46 @@ h1, h2, h3 {
   border-left: 1px solid var(--border);
   padding-left: 10px;
 }
+
+/* --- TACTICAL CUSTOM SCROLLBAR --- */
+
+/* 1. Target the scrollbar width (Thin and Minimal) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px; /* For horizontal scroll if needed */
+}
+
+/* 2. The Track (The background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+  border-left: 1px solid var(--border-subtle);
+}
+
+/* 3. The Handle (The draggable part) */
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 0px; /* Sharp edges for a tech look */
+  transition: background 0.3s ease;
+}
+
+/* 4. Handle on Hover (Pulse effect with Tactical Cyan) */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+  box-shadow: 0 0 10px var(--secondary); /* Slight glow */
+}
+
+/* 5. Firefox Support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--bg-app);
+}
+
+/* Specific class for the Dropdown Menu scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  opacity: 0.5;
+}
