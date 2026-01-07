@@ -31,7 +31,13 @@ CORS_ALLOW_ALL_ORIGINS = True
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1', 'onrender.com', 'aegisshield-voadewumi.vercel.app']
+# settings.py
+ALLOWED_HOSTS = [
+    '.vercel.app', 
+    'localhost', 
+    '127.0.0.1', 
+    'aegisshield-voadewumi2316.vercel.app' # Must match your browser log
+]
 
 
 # Application definition

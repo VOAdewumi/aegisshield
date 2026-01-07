@@ -496,50 +496,6 @@ const Dashboard = () => {
     [filters.continent]
   );
 
-  // 4. BACKEND SYNC WITH INTEGRATED SEARCH/FILTERS
-  // useEffect(() => {
-  //   const fetchIntel = async () => {
-  //     setLoading(true);
-  //     try {
-  //       let url = "http://127.0.0.1:8000/api/v1/analytics/records/latest/";
-
-  //       // If the user has changed any default filter, we switch to the filtered endpoint
-  //       const isDefault =
-  //         filters.year === "2026" &&
-  //         filters.continent === "GLOBAL" &&
-  //         filters.country === "ALL_COUNTRIES" &&
-  //         !filters.searchTerm;
-
-  //       if (!isDefault) {
-  //         url = `http://127.0.0.1:8000/api/v1/analytics/records/?year=${filters.year}`;
-
-  //         if (resolvedVector) {
-  //           url += `&iso_ref=${resolvedVector}`;
-  //         } else if (filters.continent !== "GLOBAL") {
-  //           url += `&continent=${filters.continent}`;
-  //         }
-
-  //         if (filters.searchTerm && !resolvedVector) {
-  //           url += `&search=${filters.searchTerm}`;
-  //         }
-  //       }
-
-  //       const res = await fetch(url);
-  //       const json = await res.json();
-  //       const dataArray = json.results ? json.results : json;
-
-  //       const mapped = {};
-  //       dataArray.forEach((r) => (mapped[r.iso_ref] = r.hotspot_score));
-  //       setConflictData(mapped);
-  //       setLoading(false);
-  //     } catch (e) {
-  //       console.error("INTEL_FAILURE", e);
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchIntel();
-  // }, [filters, resolvedVector]);
-
   useEffect(() => {
     const fetchHotspotData = async () => {
       setLoading(true);
